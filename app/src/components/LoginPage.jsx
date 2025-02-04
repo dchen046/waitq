@@ -2,13 +2,12 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 
-const Login = () => {
+const LoginPage = () => {
     return (
         <div>
-            <p>Please Log In</p>
+            <h4>Please Log In</h4>
             <LoginForm />
         </div>
-
     );
 }
 
@@ -43,4 +42,4 @@ const LoginForm = () => {
     );
 }
 
-export default Login;
+export default LoginPage;
