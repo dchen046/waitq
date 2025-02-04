@@ -8,7 +8,6 @@ const SignupPage = () => {
             <h4>Create An Account</h4>
             <SignupForm />
         </div>
-
     );
 }
 
