@@ -3,10 +3,10 @@ import { register } from "../controllers/signupController.js";
 
 const signupRouter = Router();
 
-signupRouter.post('/:username/:password', async (req, res) => {
-    const { username, password } = req.params;
-    console.log(`${username} : ${password}`);
-    const hasRegistered = await register(username, password);
+signupRouter.post('/', async (req, res) => {
+    const { email, password } = req.body;
+    console.log(`${email} : ${password}`);
+    const hasRegistered = await register(email, password);
     if(hasRegistered) {
         const msg = {
             status: true,

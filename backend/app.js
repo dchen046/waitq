@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import session from 'express-session';
 import passport from 'passport';
+import passportInit from './src/passport-config.js';
 import cors from 'cors';
 // import flash from 'express-flash'
 
@@ -27,7 +28,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// sessions
+// passport
+passportInit(passport);
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -45,8 +47,8 @@ app.use(cors(corsOptions));
 
 //app routes
 app.get("/", (req, res) => res.send("Hello, world!"));
-app.use("/auth", authRouter);
-app.use("/register", signupRouter);
+app.use("/api/auth", passport.authenticate('local'), authRouter);
+app.use("/api/register", signupRouter);
 
 // app port
 const PORT = process.env.PORT;

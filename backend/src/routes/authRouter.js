@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { getAllUsers } from "../db/queries.js";
 
 const authRouter = Router();
 
-authRouter.get('/', async (req, res) => {
-    const users = await getAllUsers();
-    console.log(users);
-    res.send("Users gotten");
-});
+// authRouter.get('/:username/:password', async (req, res) => {
+//     const { username, password } = req.params;
+//     const status = await authenticate(username, password);
+// });
+
+// authRouter.post('/', passport.authenticate('local', ))
 
 export default authRouter;

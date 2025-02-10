@@ -14,14 +14,24 @@ const SignupPage = () => {
 const handleRegister = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const username = formData.get('email');
+    const email = formData.get('email');
     const password = formData.get('password');
     const confirm_pass = formData.get('confirm_password');
     if (password === confirm_pass) {
-        let url = `http://localhost:3000/register/${username}/${password}`;
-        const response = await fetch(url, {
-            method: "POST"
+        const url = `http://localhost:3000/api/register`;
+        const body = JSON.stringify({
+            email: email,
+            password: password
         });
+
+        console.log(body);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: body
+        });
+
         if (!response.ok) throw new Error(`Response status: ${response.status}`);
         const result = await response.json();
         console.log(result);
