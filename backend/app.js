@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import session from 'express-session';
 import passport from 'passport';
-import passportInit from './src/passport-config.js';
+import './src/strategies/local.js';
 import cors from 'cors';
 // import flash from 'express-flash'
 
@@ -29,7 +29,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // passport
-passportInit(passport);
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,

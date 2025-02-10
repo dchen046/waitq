@@ -19,20 +19,21 @@ const handleRegister = async (e) => {
     const confirm_pass = formData.get('confirm_password');
     if (password === confirm_pass) {
         const url = `http://localhost:3000/api/register`;
+
         const body = JSON.stringify({
             email: email,
             password: password
         });
-
-        console.log(body);
-
+        
         const response = await fetch(url, {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: body
         });
 
-        if (!response.ok) throw new Error(`Response status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
         const result = await response.json();
         console.log(result);
     } else {

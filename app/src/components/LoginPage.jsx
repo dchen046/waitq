@@ -15,11 +15,23 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        let url = `http://localhost:3000/auth`;
-        for (const [key, value] of formData.entries()) {
-            url += `/${value}`;
-        }
+        const url = `http://localhost:3000/api/auth/login`;
 
+        const body = JSON.stringify({
+            email: formData.get('email'),
+            password: formData.get('password'),
+        });
+        
+        console.log('authing');
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: body
+        });
+
+        if (!response.ok) throw new Error(`Response status: ${response.status}`);
+        const result = await response.json();
+        console.log(result);
     }
 
     return (
