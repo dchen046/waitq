@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import session from 'express-session';
 import passport from 'passport';
+import cors from 'cors';
 // import flash from 'express-flash'
 
 // routers
@@ -28,17 +29,24 @@ app.use(express.urlencoded({ extended: false }));
 
 // sessions
 app.use(session({
-    secret: process.env.SESSION_SECRET, 
-    resave: false, 
-    saveUninitialized: false 
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+// cors
+const corsOptions = {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+}
+app.use(cors(corsOptions));
+
 //app routes
 app.get("/", (req, res) => res.send("Hello, world!"));
 app.use("/auth", authRouter);
-app.use("/signup", signupRouter);
+app.use("/register", signupRouter);
 
 // app port
 const PORT = process.env.PORT;

@@ -11,16 +11,35 @@ const SignupPage = () => {
     );
 }
 
+const handleRegister = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const username = formData.get('email');
+    const password = formData.get('password');
+    const confirm_pass = formData.get('confirm_password');
+    if (password === confirm_pass) {
+        let url = `http://localhost:3000/register/${username}/${password}`;
+        const response = await fetch(url, {
+            method: "POST"
+        });
+        if (!response.ok) throw new Error(`Response status: ${response.status}`);
+        const result = await response.json();
+        console.log(result);
+    } else {
+        console.log("password not the same");
+    }
+}
+
 const SignupForm = () => {
     return (
         <div className=''>
-            <Form action='' method='POST'>
+            <Form onSubmit={handleRegister}>
                 <FloatingLabel
                     controlId="email"
                     label="Email address"
                     className="mb-3"
                 >
-                    <Form.Control type="email" placeholder="name@example.com" autoComplete='off' />
+                    <Form.Control name="email" type="email" placeholder="name@example.com" autoComplete='off' />
                 </FloatingLabel>
 
                 <FloatingLabel
@@ -28,15 +47,15 @@ const SignupForm = () => {
                     label="Password"
                     className="mb-3"
                 >
-                    <Form.Control type="password" placeholder="password" />
+                    <Form.Control name='password' type="password" placeholder="password" />
                 </FloatingLabel>
 
                 <FloatingLabel
-                    controlId="password"
+                    controlId="confirm_password"
                     label="Confirm Password"
                     className="mb-3"
                 >
-                    <Form.Control type="password" placeholder="password" />
+                    <Form.Control name="confirm_password" type="password" placeholder="password" />
                 </FloatingLabel>
 
                 <Button as="input" type="submit" value="Signup" className='w-100' />
