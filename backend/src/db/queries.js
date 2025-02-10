@@ -25,6 +25,6 @@ export const addUser = async (username, password) => {
             password: password
         }
     });
-
     console.log(newUser);
+    return newUser;
 }

@@ -5,8 +5,11 @@ import { fileURLToPath } from 'node:url';
 
 import session from 'express-session';
 import passport from 'passport';
-import flash from 'express-flash'
+// import flash from 'express-flash'
+
+// routers
 import authRouter from './src/routes/authRouter.js';
+import signupRouter from './src/routes/signupRouter.js';
 
 const app = express();
 
@@ -35,6 +38,7 @@ app.use(passport.session());
 //app routes
 app.get("/", (req, res) => res.send("Hello, world!"));
 app.use("/auth", authRouter);
+app.use("/signup", signupRouter);
 
 // app port
 const PORT = process.env.PORT;
