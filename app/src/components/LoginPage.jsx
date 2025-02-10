@@ -12,15 +12,28 @@ const LoginPage = () => {
 }
 
 const LoginForm = () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        let url = `http://localhost:3000/auth`;
+        for (const [key, value] of formData.entries()) {
+            url += `/${value}`;
+        }
+
+    }
+
     return (
         <div className=''>
-            <Form action='' method='POST'>
+            <Form
+                onSubmit={handleLogin}
+                id='login-form'
+            >
                 <FloatingLabel
                     controlId="email"
                     label="Email address"
                     className="mb-3"
                 >
-                    <Form.Control type="email" placeholder="name@example.com" autoComplete='off' />
+                    <Form.Control type="email" name='email' placeholder="name@example.com" autoComplete='off' />
                 </FloatingLabel>
 
                 <FloatingLabel
@@ -28,7 +41,7 @@ const LoginForm = () => {
                     label="Password"
                     className="mb-3"
                 >
-                    <Form.Control type="password" placeholder="password" />
+                    <Form.Control type="password" name='password' placeholder="password" />
                 </FloatingLabel>
 
                 <Button as="input" type="submit" value="Login" className='w-100' />
