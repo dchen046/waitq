@@ -7,7 +7,7 @@ import session from 'express-session';
 import passport from 'passport';
 import './src/strategies/local.js';
 import cors from 'cors';
-// import flash from 'express-flash'
+import flash from 'express-flash'
 
 // routers
 import authRouter from './src/routes/authRouter.js';
@@ -36,6 +36,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+// app.use(flash());
 
 // cors
 const corsOptions = {
@@ -46,7 +47,7 @@ app.use(cors(corsOptions));
 
 //app routes
 app.get("/", (req, res) => res.send("Hello, world!"));
-app.use("/api/auth", passport.authenticate('local'), authRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/register", signupRouter);
 
 // app port

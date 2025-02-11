@@ -8,17 +8,19 @@ passport.use(
         usernameField: 'email',
     }, async (email, password, done) => {
         if (!email || !password) {
-            done(null, false, { message: "Missing Credentials" });
+            return done(null, false, { message: "Missing Credentials" });
         }
         const user = await getUserByEmail(email);
-        if (!user) {
-            done(null, false, { message: "Invalid email" });
+        if (user === null) {
+            return done(null, false, { message: "Invalid email" });
+        } 
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return done(null, false, { message: "Invalid password" });
+        } else {
+            return done(null, user);
         }
-        if (await !bcrypt.compare(password, user.password)) {
-            done(null, false, { message: "Invalid password" });
-        }
-        console.log("Successful login");
-        done(null, user);
+        
     })
 );
 

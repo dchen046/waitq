@@ -1,17 +1,24 @@
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
 
 const LoginPage = () => {
+    const [error, setError] = useState("");
+    const updateError = (err) => {
+        setError(err);
+    }
+
     return (
         <div>
+            <h4>{error}</h4>
             <h4>Please Log In</h4>
-            <LoginForm />
+            <LoginForm updateError={updateError} />
         </div>
     );
 }
 
-const LoginForm = () => {
+const LoginForm = ({ updateError }) => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -21,17 +28,17 @@ const LoginForm = () => {
             email: formData.get('email'),
             password: formData.get('password'),
         });
-        
-        console.log('authing');
+
         const response = await fetch(url, {
             method: "POST",
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: body
         });
 
-        if (!response.ok) throw new Error(`Response status: ${response.status}`);
+        if (!response.ok) console.log(`Response status: ${response.status}`);
         const result = await response.json();
         console.log(result);
+        updateError(result.err);
     }
 
     return (
