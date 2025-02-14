@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import jwt from 'jsonwebtoken';
 const authRouter = Router();
 
 authRouter.post("/login", (req, res) => {
@@ -12,8 +13,13 @@ authRouter.post("/login", (req, res) => {
                         res.send(error);
                     } else {
                         console.log("Successfully authenticated");
-                        res.status(401).json({
-                            err: ""
+                        const options = {
+                            expiresIn: '30s'
+                        }
+                        jwt.sign({ user }, process.env.JWT_KEY, options, (err, token) => {
+                            res.json({
+                                token
+                            });
                         });
                     };
                 });

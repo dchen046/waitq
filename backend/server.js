@@ -12,6 +12,7 @@ import flash from 'express-flash'
 // routers
 import authRouter from './src/routes/authRouter.js';
 import signupRouter from './src/routes/signupRouter.js';
+import pRouter from './src/routes/pRouter.js';
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(cors(corsOptions));
 app.get("/", (req, res) => res.send("Hello, world!"));
 app.use("/api/auth", authRouter);
 app.use("/api/register", signupRouter);
+app.use("/api/protected", pRouter);
 
 // app port
 const PORT = process.env.PORT;
