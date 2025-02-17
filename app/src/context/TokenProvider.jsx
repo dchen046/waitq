@@ -13,7 +13,9 @@ export const UserProvider = ({ children }) => {
             try {
                 const decodedToken = jwtDecode(token);
                 const currentTime = Date.now() / 1000;
-                return decodedToken.exp > currentTime;
+                console.log(decodedToken.exp - currentTime);
+                if (decodedToken.exp) return decodedToken.exp > currentTime;
+                return true;
             } catch (error) {
                 console.error("Error decoding token: ", error);
             }
@@ -24,15 +26,13 @@ export const UserProvider = ({ children }) => {
 
     const updateTokenStatus = () => {
         const token = localStorage.getItem('jwt');
-        console.log(token);
-        console.log('h: ' + isTokenValid(token));
         setTokenStatus(isTokenValid(token));
     }
 
     return (
         <TokenStatusContext.Provider value={validToken}>
             <TokenUpdateContext.Provider value={updateTokenStatus}>
-                {children};
+                {children}
             </TokenUpdateContext.Provider>
         </TokenStatusContext.Provider>
     );
