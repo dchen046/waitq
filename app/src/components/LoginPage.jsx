@@ -1,17 +1,33 @@
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useTokenUpdateContext } from '../context/TokenContext';
 
 const LoginPage = () => {
+    const [error, setError] = useState("");
+    // const [isLoggedIn, setLoggedIn] = useState(false);
+    // const loggedin = useUser();
+    // const setLoggedIn = useUserUpdate();
+    // console.log('aaa' + loggedin);
+
+    // const user = useUserContext();
+    // const updateUser = useUserUpdateContext();
+
     return (
         <div>
+            <h4>{error}</h4>
             <h4>Please Log In</h4>
-            <LoginForm />
+            <LoginForm setError={setError} />
         </div>
     );
 }
 
-const LoginForm = () => {
+const LoginForm = ({ setError }) => {
+
+    const updateTokenStatus = useTokenUpdateContext();
+
     const handleLogin = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -21,15 +37,33 @@ const LoginForm = () => {
             email: formData.get('email'),
             password: formData.get('password'),
         });
-        
-        console.log('authing');
+
         const response = await fetch(url, {
             method: "POST",
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: body
         });
 
-        if (!response.ok) throw new Error(`Response status: ${response.status}`);
+        if (!response.ok) console.log(`Response status: ${response.status}`);
+
+        const result = await response.json();
+        if (result.err) setError(result.err);
+        else {
+            console.log(result);
+            localStorage.setItem('jwt', result.token);
+            updateTokenStatus();
+        }
+    }
+
+    const protectedBtn = async () => {
+        const url = `http://localhost:3000/api/protected/post`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
         const result = await response.json();
         console.log(result);
     }
@@ -62,9 +96,15 @@ const LoginForm = () => {
             <div>
                 <p> Don&apos;t Have An Account?</p>
                 <Button variant='secondary' href='/signup' value='Sign Up' className='w-100'>Sign Up</Button>
+                <Button variant='warning' onClick={protectedBtn} value='proct'>Proct</Button>
             </div>
         </div>
     );
+}
+
+LoginForm.propTypes = {
+    setError: PropTypes.func.isRequired,
+    // setLoggedIn: PropTypes.func.isRequired
 }
 
 export default LoginPage;

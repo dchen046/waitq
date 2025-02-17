@@ -7,11 +7,12 @@ import session from 'express-session';
 import passport from 'passport';
 import './src/strategies/local.js';
 import cors from 'cors';
-// import flash from 'express-flash'
+import flash from 'express-flash'
 
 // routers
 import authRouter from './src/routes/authRouter.js';
 import signupRouter from './src/routes/signupRouter.js';
+import pRouter from './src/routes/pRouter.js';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+// app.use(flash());
 
 // cors
 const corsOptions = {
@@ -46,8 +48,9 @@ app.use(cors(corsOptions));
 
 //app routes
 app.get("/", (req, res) => res.send("Hello, world!"));
-app.use("/api/auth", passport.authenticate('local'), authRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/register", signupRouter);
+app.use("/api/protected", pRouter);
 
 // app port
 const PORT = process.env.PORT;
