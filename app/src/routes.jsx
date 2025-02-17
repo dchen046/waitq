@@ -7,7 +7,7 @@ import SignupPage from './components/SignupPage.jsx';
 const routes = [
   {
     path: '/',
-    element: <LoginPage />,
+    element: <App />,
   },
   {
     path: 'signup',

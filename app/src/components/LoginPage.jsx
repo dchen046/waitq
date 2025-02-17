@@ -3,24 +3,30 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import App from '../App';
+import { useTokenUpdateContext } from '../context/TokenContext';
 
 const LoginPage = () => {
     const [error, setError] = useState("");
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    // const [isLoggedIn, setLoggedIn] = useState(false);
+    // const loggedin = useUser();
+    // const setLoggedIn = useUserUpdate();
+    // console.log('aaa' + loggedin);
 
-    return (!isLoggedIn ?
+    // const user = useUserContext();
+    // const updateUser = useUserUpdateContext();
+
+    return (
         <div>
             <h4>{error}</h4>
             <h4>Please Log In</h4>
-            <LoginForm setError={setError} setLoggedIn={setLoggedIn} />
+            <LoginForm setError={setError} />
         </div>
-        :
-        <App />
     );
 }
 
-const LoginForm = ({ setError, setLoggedIn }) => {
+const LoginForm = ({ setError }) => {
+
+    const updateTokenStatus = useTokenUpdateContext();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -43,8 +49,9 @@ const LoginForm = ({ setError, setLoggedIn }) => {
         const result = await response.json();
         if (result.err) setError(result.err);
         else {
-            localStorage.setItem('token', result.token);
-            setLoggedIn(true);
+            console.log(result);
+            localStorage.setItem('jwt', result.token);
+            updateTokenStatus();
         }
     }
 
@@ -97,7 +104,7 @@ const LoginForm = ({ setError, setLoggedIn }) => {
 
 LoginForm.propTypes = {
     setError: PropTypes.func.isRequired,
-    setLoggedIn: PropTypes.func.isRequired
+    // setLoggedIn: PropTypes.func.isRequired
 }
 
 export default LoginPage;

@@ -1,20 +1,15 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import HomePage from './components/HomePage';
+import { UserProvider } from './context/TokenProvider';
+
 const App = () => {
   return (
-    <div>
-      <h1>Hello from the main page of the app!</h1>
-      <p>Here are some examples of links to other pages</p>
-      <nav>
-        <ul>
-          <li>
-            <a href="profile">Profile page</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  );
-};
+    <UserProvider>
+      <HomePage />
+    </UserProvider>
+  )
+}
 
 export default App
