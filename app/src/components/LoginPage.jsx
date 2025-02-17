@@ -7,13 +7,6 @@ import { useTokenUpdateContext } from '../context/TokenContext';
 
 const LoginPage = () => {
     const [error, setError] = useState("");
-    // const [isLoggedIn, setLoggedIn] = useState(false);
-    // const loggedin = useUser();
-    // const setLoggedIn = useUserUpdate();
-    // console.log('aaa' + loggedin);
-
-    // const user = useUserContext();
-    // const updateUser = useUserUpdateContext();
 
     return (
         <div>
@@ -25,7 +18,6 @@ const LoginPage = () => {
 }
 
 const LoginForm = ({ setError }) => {
-
     const updateTokenStatus = useTokenUpdateContext();
 
     const handleLogin = async (e) => {
@@ -55,18 +47,18 @@ const LoginForm = ({ setError }) => {
         }
     }
 
-    const protectedBtn = async () => {
-        const url = `http://localhost:3000/api/protected/post`;
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        })
+    // const protectedBtn = async () => {
+    //     const url = `http://localhost:3000/api/protected/post`;
+    //     const response = await fetch(url, {
+    //         method: "POST",
+    //         headers: {
+    //             'authorization': `Bearer ${localStorage.getItem('token')}`
+    //         }
+    //     })
 
-        const result = await response.json();
-        console.log(result);
-    }
+    //     const result = await response.json();
+    //     console.log(result);
+    // }
 
     return (
         <div className=''>
@@ -96,7 +88,7 @@ const LoginForm = ({ setError }) => {
             <div>
                 <p> Don&apos;t Have An Account?</p>
                 <Button variant='secondary' href='/signup' value='Sign Up' className='w-100'>Sign Up</Button>
-                <Button variant='warning' onClick={protectedBtn} value='proct'>Proct</Button>
+                {/* <Button variant='warning' onClick={protectedBtn} value='proct'>Proct</Button> */}
             </div>
         </div>
     );

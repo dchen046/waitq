@@ -24,8 +24,6 @@ export const UserProvider = ({ children }) => {
 
     const updateTokenStatus = () => {
         const token = localStorage.getItem('jwt');
-        console.log(token);
-        console.log('h: ' + isTokenValid(token));
         setTokenStatus(isTokenValid(token));
     }
 

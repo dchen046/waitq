@@ -7,7 +7,6 @@ authRouter.post("/login", (req, res) => {
     passport.authenticate("local",
         (err, user, info) => {
             if (user) {
-                // console.log(user);
                 // Login if user exists
                 req.logIn(user, (error) => {
                     if (error) {
@@ -15,7 +14,7 @@ authRouter.post("/login", (req, res) => {
                     } else {
                         console.log("Successfully authenticated");
                         const options = {
-                            expiresIn: '30s'
+                            // expiresIn: '30s'
                         }
                         jwt.sign({ user }, process.env.JWT_KEY, options, (err, token) => {
                             console.log(token);

@@ -14,7 +14,30 @@ datasource db {
 }
 
 model users {
-  id       Int    @default(autoincrement())
-  email    String @id @db.VarChar(255)
-  password String @db.VarChar(255)
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  password   String
+  businesses businesses[]
+}
+
+model businesses {
+  name    String @id
+  address String
+  phone   String
+  email   String
+
+  user_id      Int            @unique
+  user         users          @relation(fields: [user_id], references: [id])
+  reservations reservations[]
+}
+
+model reservations {
+  name  String
+  size  String
+  time  DateTime
+  phone String
+  notes String
+
+  b_name   String     @unique
+  business businesses @relation(fields: [b_name], references: [name])
 }
