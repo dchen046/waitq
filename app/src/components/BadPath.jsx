@@ -9,7 +9,7 @@ const BadPath = () => {
     }
     
     return (
-        <>
+        <div className="center-content">
             <h1>Session expired!</h1>
             <h2>
                 Please Log In To Gain Access!
@@ -21,7 +21,7 @@ const BadPath = () => {
                 >
                 Log in
             </Button>
-        </>
+        </div>
 
     )
 }

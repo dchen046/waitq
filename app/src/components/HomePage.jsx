@@ -11,10 +11,10 @@ const Home = () => {
 
 const HomePage = () => {
     return (
-        <>
+        <div className="">
             <ProfileNav />
             <Waitlist />
-        </>
+        </div>
     )
 }
 

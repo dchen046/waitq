@@ -5,20 +5,22 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useTokenStatusContext, useTokenUpdateContext } from '../context/TokenContext';
+import Container from 'react-bootstrap/esm/Container';
 
 const LoginPage = () => {
     const [error, setError] = useState("");
     const isValidToken = useTokenStatusContext();
-    
+    console.log(isValidToken.current);
+
     if (isValidToken.current) {
         return <Navigate to='/home' />
     } else {
         return (
-            <div>
-                <h4>{error}</h4>
+            <Container className='center-content'>
+                <h4 className='error-msg'>{error}</h4>
                 <h4>Please Log In</h4>
                 <LoginForm setError={setError} />
-            </div>
+            </Container>
         );
     }
 }
