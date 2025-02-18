@@ -3,6 +3,7 @@ import { MdGroupAdd } from "react-icons/md";
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import AddPartyForm from "./AddPartyForm";
 
 const AddPartyModal = () => {
     const [show, setShow] = useState(false);
@@ -22,15 +23,15 @@ const AddPartyModal = () => {
                     <Modal.Title>Add To Waitlist</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    MAKE FORM HERE
+                    <AddPartyForm handleClose={handleClose}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    {/* <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleClose}>
                         Save Changes
-                    </Button>
+                    </Button> */}
                 </Modal.Footer>
             </Modal>
         </>

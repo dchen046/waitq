@@ -6,12 +6,12 @@ import { useLocation } from 'react-router-dom';
 
 const ProfileNav = () => {
     const location = useLocation();
-    const url = location.pathname;
-    console.log(url);
+    // const url = location.pathname;
+    // console.log(url);
     return (
         <Navbar 
             expand="lg" 
-            className="bg-body-tertiary" 
+            className="bg-body-tertiary mb-3" 
             bg="dark" 
             data-bs-theme="dark"
         >
