@@ -9,17 +9,26 @@ const ProfileNav = () => {
     const url = location.pathname;
     console.log(url);
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar 
+            expand="lg" 
+            className="bg-body-tertiary" 
+            bg="dark" 
+            data-bs-theme="dark"
+        >
             <Container>
                 <Navbar.Brand>Waitq</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="m-auto">
-                        <Nav.Link href="/home/waitlist">Home</Nav.Link>
-                        <Nav.Link href="/home/layout">layout</Nav.Link>
+                    <Nav 
+                        className="flex-grow-1 justify-content-evenly"
+                        activeKey={location.pathname}
+                    >
+                        <Nav.Link eventKey="/home/waitlist" href="/home/waitlist">Waitlist</Nav.Link>
+                        <Nav.Link eventKey="/home/layout" href="/home/layout">Layout</Nav.Link>
+                        <LogoutBtn />
                     </Nav>
                 </Navbar.Collapse>
-                <LogoutBtn />
+                
             </Container>
         </Navbar>
     );
