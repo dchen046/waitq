@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+// import { useState } from "react";
 import { TokenStatusContext, TokenUpdateContext } from "./TokenContext";
 import { jwtDecode } from 'jwt-decode';
+import { useRef } from "react";
 
 
 export const UserProvider = ({ children }) => {
@@ -13,20 +14,23 @@ export const UserProvider = ({ children }) => {
             try {
                 const decodedToken = jwtDecode(token);
                 const currentTime = Date.now() / 1000;
-                console.log(decodedToken.exp - currentTime);
-                if (decodedToken.exp) return decodedToken.exp > currentTime;
-                return true;
+                return decodedToken.exp ? decodedToken.exp > currentTime : true;
             } catch (error) {
                 console.error("Error decoding token: ", error);
             }
         }
     }
 
-    const [validToken, setTokenStatus] = useState(isTokenValid(localStorage.getItem('jwt')));
+    let validToken = useRef(isTokenValid(localStorage.getItem('jwt')));
 
-    const updateTokenStatus = () => {
+    // const [validToken, setValidToken] = useState(isTokenValid(localStorage.getItem('jwt')));
+
+    function updateTokenStatus() {
+        console.log('updaitng');
         const token = localStorage.getItem('jwt');
-        setTokenStatus(isTokenValid(token));
+        validToken.current = isTokenValid(token);
+        console.log(validToken.current);
+        // setValidToken(isTokenValid(token));
     }
 
     return (

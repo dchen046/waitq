@@ -3,21 +3,30 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useTokenUpdateContext } from '../context/TokenContext';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useTokenStatusContext, useTokenUpdateContext } from '../context/TokenContext';
+import Container from 'react-bootstrap/esm/Container';
 
 const LoginPage = () => {
     const [error, setError] = useState("");
+    const isValidToken = useTokenStatusContext();
+    console.log(isValidToken.current);
 
-    return (
-        <div>
-            <h4>{error}</h4>
-            <h4>Please Log In</h4>
-            <LoginForm setError={setError} />
-        </div>
-    );
+    if (isValidToken.current) {
+        return <Navigate to='/home' />
+    } else {
+        return (
+            <Container className='center-content'>
+                <h4 className='error-msg'>{error}</h4>
+                <h4>Please Log In</h4>
+                <LoginForm setError={setError} />
+            </Container>
+        );
+    }
 }
 
 const LoginForm = ({ setError }) => {
+    const navigate = useNavigate();
     const updateTokenStatus = useTokenUpdateContext();
 
     const handleLogin = async (e) => {
@@ -44,6 +53,7 @@ const LoginForm = ({ setError }) => {
             console.log(result);
             localStorage.setItem('jwt', result.token);
             updateTokenStatus();
+            navigate('/home');
         }
     }
 
