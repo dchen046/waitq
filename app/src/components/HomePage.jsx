@@ -1,7 +1,8 @@
 import { useTokenStatusContext } from "../context/TokenContext";
 import BadPath from "./BadPath";
 import ProfileNav from "./ProfileNav";
-import Waitlist from "./Waitlist";
+// import Waitlist from "./Waitlist";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
     const isValidToken = useTokenStatusContext();
@@ -11,9 +12,9 @@ const Home = () => {
 
 const HomePage = () => {
     return (
-        <div className="">
+        <div>
             <ProfileNav />
-            <Waitlist />
+            <Outlet />
         </div>
     )
 }

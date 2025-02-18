@@ -1,12 +1,11 @@
-import Button from "react-bootstrap/Button";
+import AddPartyModal from "./AddPartyModal"
 
 const Waitlist = () => {
     return (
         <>
-            <Button variant="success">Add</Button>
+            <AddPartyModal />
         </>
-        // <p> This is waitlist </p>
-    )
+    );
 }
 
 export default Waitlist;

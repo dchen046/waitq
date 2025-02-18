@@ -14,7 +14,7 @@ authRouter.post("/login", (req, res) => {
                     } else {
                         console.log("Successfully authenticated");
                         const options = {
-                            expiresIn: '30s'
+                            expiresIn: process.env.JWT_EXP
                         }
                         jwt.sign({ user }, process.env.JWT_KEY, options, (err, token) => {
                             console.log(token);
