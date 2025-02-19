@@ -14,6 +14,9 @@ export const UserProvider = ({ children }) => {
             try {
                 const decodedToken = jwtDecode(token);
                 const currentTime = Date.now() / 1000;
+                // console.log(decodedToken.exp);
+                // console.log(currentTime);
+                // console.log(decodedToken.exp - currentTime);
                 return decodedToken.exp ? decodedToken.exp > currentTime : true;
             } catch (error) {
                 console.error("Error decoding token: ", error);
