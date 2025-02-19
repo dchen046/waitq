@@ -2,7 +2,7 @@
 import App from './App.jsx'
 import LoginPage from './components/LoginPage.jsx';
 import SignupPage from './components/SignupPage.jsx';
-import Waitlist from './components/Waitlist.jsx';
+import WaitlistPage from './components/WaitlistPage.jsx';
 
 
 const routes = [
@@ -18,7 +18,7 @@ const routes = [
     path: 'home',
     element: <App />,
     children: [
-      {path: 'waitlist', element: <Waitlist />},
+      {path: 'waitlist', element: <WaitlistPage />},
       {path: 'layout', element: <p>hi</p>},
     ]
   }

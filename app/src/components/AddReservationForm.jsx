@@ -14,16 +14,12 @@ const getTimeFormat = (date) => {
     return `${year}-${month}-${day}T${hour}:${min}`;
 }
 
-const AddPartyForm = ({ handleClose }) => {
+const AddReservationForm = ({ handleClose }) => {
     const date = useRef(new Date());
-    console.log(date.current);
     const today = getTimeFormat(date.current);
-    console.log(today);
 
     const handlePicker = (e) => {
         e.currentTarget.showPicker();
-        console.log(e.currentTarget.value)
-
         //2025-02-18T17:59
     }
 
@@ -76,7 +72,7 @@ const AddPartyForm = ({ handleClose }) => {
                             />
                         </Form.Group>
                         <div className="d-flex justify-content-end">
-                            <Button variant="warning" type="submit" className="justify-content-end">
+                            <Button variant="warning" type="submit">
                                 Confirm
                             </Button>
                         </div>
@@ -88,4 +84,4 @@ const AddPartyForm = ({ handleClose }) => {
     )
 }
 
-export default AddPartyForm;
+export default AddReservationForm;

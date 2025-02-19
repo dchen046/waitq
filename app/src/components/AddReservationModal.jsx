@@ -1,29 +1,29 @@
 
-import { MdGroupAdd } from "react-icons/md";
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import AddPartyForm from "./AddPartyForm";
+import AddReservationForm from "./AddReservationForm";
+import { HiUserGroup } from "react-icons/hi";
 
-const AddPartyModal = () => {
+
+const AddReservationModal = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-
     return (
         <>
             <Button variant="success" onClick={handleShow}>
-                <MdGroupAdd />
+                <HiUserGroup />
             </Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add To Waitlist</Modal.Title>
+                    <Modal.Title>Create Reservation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddPartyForm handleClose={handleClose}/>
+                    <AddReservationForm handleClose={handleClose}/>
                 </Modal.Body>
                 <Modal.Footer>
                     {/* <Button variant="secondary" onClick={handleClose}>
@@ -38,4 +38,4 @@ const AddPartyModal = () => {
     );
 }
 
-export default AddPartyModal;
+export default AddReservationModal;
