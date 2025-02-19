@@ -13,7 +13,7 @@ const AddWaitlistModal = () => {
 
     return (
         <>
-            <Button variant="info" onClick={handleShow}>
+            <Button variant="info" onClick={handleShow} className="m-2">
                 <MdGroupAdd />
             </Button>
 

@@ -7,8 +7,8 @@ import Container from 'react-bootstrap/esm/Container';
 // default 15 mins from current time
 const getWaittime = (mins = 15) => {
     const date = new Date(new Date().getTime() + (mins * 60000));
-    const hour = date.getHours();
-    const min = date.getMinutes();
+    const hour = ('0' + date.getHours()).slice(-2);
+    const min = ('0' + date.getMinutes()).slice(-2);
 
     return `${hour}:${min}`;
 }
@@ -19,6 +19,11 @@ const AddWaitlistForm = ({ handleClose }) => {
     const handlePicker = (e) => {
         e.currentTarget.showPicker();
         console.log(e.currentTarget.value);
+    }
+
+    const handleWaitlistSubmit = (e) => {
+        e.preventDefault();
+        handleClose();
     }
 
     return (
@@ -70,7 +75,7 @@ const AddWaitlistForm = ({ handleClose }) => {
                             />
                         </Form.Group>
                         <div className="d-flex justify-content-end">
-                            <Button variant="warning" type="submit">
+                            <Button variant="warning" type="submit" onClick={handleWaitlistSubmit}>
                                 Confirm
                             </Button>
                         </div>

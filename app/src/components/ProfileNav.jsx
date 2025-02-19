@@ -24,7 +24,11 @@ const ProfileNav = () => {
                         activeKey={location.pathname}
                     >
                         <Nav.Link eventKey="/home/waitlist" href="/home/waitlist">Waitlist</Nav.Link>
+                       
                         <Nav.Link eventKey="/home/layout" href="/home/layout">Layout</Nav.Link>
+
+                         <Nav.Link eventKey="/profile" href="/profile">Profile</Nav.Link>
+                        
                         <LogoutBtn />
                     </Nav>
                 </Navbar.Collapse>

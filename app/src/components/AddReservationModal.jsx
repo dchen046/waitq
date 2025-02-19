@@ -14,7 +14,7 @@ const AddReservationModal = () => {
 
     return (
         <>
-            <Button variant="success" onClick={handleShow}>
+            <Button variant="success" onClick={handleShow} className='m-2'>
                 <HiUserGroup />
             </Button>
 
