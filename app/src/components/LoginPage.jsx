@@ -51,24 +51,13 @@ const LoginForm = ({ setError }) => {
         if (result.err) setError(result.err);
         else {
             console.log(result);
+            localStorage.setItem('profile', JSON.stringify(result));
+            localStorage.setItem('current-business', JSON.stringify(result.businesses[0]));
             localStorage.setItem('jwt', result.token);
             updateTokenStatus();
             navigate('/home');
         }
     }
-
-    // const protectedBtn = async () => {
-    //     const url = `http://localhost:3000/api/protected/post`;
-    //     const response = await fetch(url, {
-    //         method: "POST",
-    //         headers: {
-    //             'authorization': `Bearer ${localStorage.getItem('token')}`
-    //         }
-    //     })
-
-    //     const result = await response.json();
-    //     console.log(result);
-    // }
 
     return (
         <div className=''>
@@ -98,7 +87,6 @@ const LoginForm = ({ setError }) => {
             <div>
                 <p> Don&apos;t Have An Account?</p>
                 <Button variant='secondary' href='/signup' value='Sign Up' className='w-100'>Sign Up</Button>
-                {/* <Button variant='warning' onClick={protectedBtn} value='proct'>Proct</Button> */}
             </div>
         </div>
     );
@@ -106,7 +94,6 @@ const LoginForm = ({ setError }) => {
 
 LoginForm.propTypes = {
     setError: PropTypes.func.isRequired,
-    // setLoggedIn: PropTypes.func.isRequired
 }
 
 export default LoginPage;

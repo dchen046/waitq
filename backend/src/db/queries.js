@@ -28,3 +28,52 @@ export const addUser = async (email, password) => {
     console.log(newUser);
     return newUser;
 }
+
+export const addWaitlist = async (name, size, time, phone, business_name, notes ='') => {
+    try {
+        const entry = await prisma.reservations.create({
+            data: {
+                name: name,
+                size: size,
+                time: time,
+                phone: phone,
+                notes: notes,
+                b_name: business_name
+            }
+        })
+        return [null, entry];
+    } catch (err) {
+        return [err, null];
+    }
+}
+
+export const getBusinesses = async (uid) => {
+    try {
+        const businesses = await prisma.businesses.findMany({
+            where: {
+                user_id: uid
+            }
+        });
+        return [null, businesses];
+    } catch (err) {
+        return [err, null];
+    }
+}
+
+export const addBusiness = async (name, addr, phone, email, uid) => {
+    try {
+        const newBusiness = await prisma.businesses.create({
+            data: {
+                name: name,
+                address: addr,
+                phone: phone,
+                email: email,
+                user_id: uid
+            }
+        });
+        console.log(newBusiness);
+        return [null, newBusiness];
+    } catch (err) {
+        return [err, null];
+    }
+}

@@ -35,9 +35,9 @@ model reservations {
   name  String
   size  String
   time  DateTime
-  phone String
+  phone String   @unique
   notes String
 
-  b_name   String     @unique
+  b_name   String
   business businesses @relation(fields: [b_name], references: [name])
 }

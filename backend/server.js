@@ -12,7 +12,8 @@ import flash from 'express-flash'
 // routers
 import authRouter from './src/routes/authRouter.js';
 import signupRouter from './src/routes/signupRouter.js';
-import pRouter from './src/routes/pRouter.js';
+import waitlistRouter from './src/routes/waitlistRouter.js';
+import { addBusiness } from './src/db/queries.js';
 
 const app = express();
 
@@ -24,6 +25,13 @@ const __dirname = path.dirname(__filename);
 
 // for public assets
 app.use(express.static(__dirname + '/public'));
+
+// cors
+const corsOptions = {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+}
+app.use(cors(corsOptions));
 
 // parsers
 app.use(express.json());
@@ -39,21 +47,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 // app.use(flash());
 
-// cors
-const corsOptions = {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
-}
-app.use(cors(corsOptions));
-
 //app routes
 app.get("/", (req, res) => res.send("Hello, world!"));
 app.use("/api/auth", authRouter);
 app.use("/api/register", signupRouter);
-app.use("/api/protected", pRouter);
+app.use("/api/waitlist", waitlistRouter);
+// app.use("api/business". businessRouter);
 
 // app port
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`Listening on port ${PORT}`);
+    // const [error, business] = await addBusiness('testb', 'test addr', '12345', '1@gmail.com', 1);
+    // if (error) {
+    //     console.log(error);
+    // } else {
+    //     console.log(business);
+    // }
 });
