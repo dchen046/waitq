@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useRef } from 'react';
 import Container from 'react-bootstrap/esm/Container';
+import PropTypes from 'prop-types';
 
 // hr:mins
 // default 15 mins from current time
@@ -85,6 +86,10 @@ const AddWaitlistForm = ({ handleClose }) => {
             </Container>
         </>
     )
+}
+
+AddWaitlistForm.propTypes = {
+    handleClose: PropTypes.func.isRequired
 }
 
 export default AddWaitlistForm;

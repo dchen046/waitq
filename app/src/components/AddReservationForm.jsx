@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useRef } from 'react';
 import Container from 'react-bootstrap/esm/Container';
+import PropTypes from 'prop-types';
 
 // year-month-dayThr:mins
 const getTimeFormat = (date) => {
@@ -21,6 +22,11 @@ const AddReservationForm = ({ handleClose }) => {
     const handlePicker = (e) => {
         e.currentTarget.showPicker();
         //2025-02-18T17:59
+    }
+
+    const handleResAdd = (e) => {
+        e.preventDefault();
+        handleClose();
     }
 
     return (
@@ -72,7 +78,7 @@ const AddReservationForm = ({ handleClose }) => {
                             />
                         </Form.Group>
                         <div className="d-flex justify-content-end">
-                            <Button variant="warning" type="submit">
+                            <Button variant="warning" type="submit" onClick={handleResAdd}>
                                 Confirm
                             </Button>
                         </div>
@@ -82,6 +88,10 @@ const AddReservationForm = ({ handleClose }) => {
             </Container>
         </>
     )
+}
+
+AddReservationForm.propTypes = {
+    handleClose: PropTypes.func.isRequired
 }
 
 export default AddReservationForm;
