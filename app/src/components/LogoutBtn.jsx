@@ -9,6 +9,7 @@ const LogoutBtn = () => {
     const updateTokenStatus = useTokenUpdateContext();
     const handleLogout = () => {
         localStorage.removeItem('jwt');
+        localStorage.removeItem('profile');
         updateTokenStatus();
         navigate('/');
     }

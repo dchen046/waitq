@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 const SignupPage = () => {
     return (
-        <div>
+        <div className='center-content'>
             <h4>Create An Account</h4>
             <SignupForm />
         </div>
