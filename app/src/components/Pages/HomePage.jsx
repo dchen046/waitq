@@ -1,6 +1,6 @@
-import { useTokenStatusContext, useTokenUpdateContext } from "../context/TokenContext";
+import { useTokenStatusContext, useTokenUpdateContext } from "../../context/TokenContext";
 import BadPath from "./BadPath";
-import ProfileNav from "./ProfileNav";
+import ProfileNav from "../ProfileNav";
 // import Waitlist from "./Waitlist";
 import { Outlet } from "react-router-dom";
 
@@ -14,9 +14,12 @@ const Home = () => {
 }
 
 const HomePage = () => {
+
+    const user = JSON.parse(localStorage.getItem('current-business'));
     return (
         <div>
             <ProfileNav />
+            <h1>Welcome Back {user.name}</h1>
             <Outlet />
         </div>
     )
