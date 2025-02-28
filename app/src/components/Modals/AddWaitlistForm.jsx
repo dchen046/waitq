@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import { useRef } from 'react';
 import Container from 'react-bootstrap/esm/Container';
 import PropTypes from 'prop-types';
+import { useWaitlistUpdateContext } from '../../context/WaitlistContext';
 
 // hr:mins
 // default 15 mins from current time
@@ -16,6 +17,7 @@ const getWaittime = (mins = 15) => {
 
 const AddWaitlistForm = ({ handleClose }) => {
     const waittime = useRef(getWaittime());
+    const updateWaitlist = useWaitlistUpdateContext();
 
     const handlePicker = (e) => {
         e.currentTarget.showPicker();
@@ -48,6 +50,7 @@ const AddWaitlistForm = ({ handleClose }) => {
 
         if (!response.ok) console.log(`Response status: ${response.status}`);
         else {
+            updateWaitlist();
             handleClose();
         }
     }

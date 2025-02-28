@@ -1,6 +1,12 @@
 import Container from 'react-bootstrap/esm/Container';
 import Table from 'react-bootstrap/Table';
 import { useWaitlistContext } from '../context/WaitlistContext';
+import { MdDelete } from "react-icons/md";
+import { FaEdit, FaCheck } from "react-icons/fa";
+import { Button } from 'react-bootstrap';
+
+
+
 
 const WaitlistTable = () => {
     return (
@@ -22,7 +28,6 @@ const WaitlistTable = () => {
                 </tbody>
             </Table>
         </Container>
-
     );
 }
 
@@ -31,7 +36,6 @@ const AddWaitlistRow = () => {
 
     return (
         waitlist.map((entry, index) => {
-            
             return (
                 <tr key={entry.phone}>
                     <td>{index + 1}</td>
@@ -40,7 +44,15 @@ const AddWaitlistRow = () => {
                     <td>{entry.size}</td>
                     <td>{formatTime(entry.time)}</td>
                     <td>{entry.notes}</td>
-                    <td>actions</td>
+                    <td>
+                        <Button variant='danger'>
+                            <MdDelete />
+                        </Button>
+
+                        <Button variant='success'>
+                            <FaCheck />
+                        </Button>
+                    </td>
                 </tr>
             )
         })
@@ -49,8 +61,8 @@ const AddWaitlistRow = () => {
 
 const formatTime = (datetime) => {
     const [date, time] = datetime.split('T');
-    const [hours, mins, secs] = time.split(':');
-    const formattedTime = `${date} @ ${hours}:${mins}`;
+    const [hours, mins] = time.split(':');
+    const formattedTime = `${date} ${hours}:${mins}`;
     return formattedTime;
 }
 
