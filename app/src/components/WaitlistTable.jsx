@@ -1,14 +1,8 @@
 import Container from 'react-bootstrap/esm/Container';
 import Table from 'react-bootstrap/Table';
-import { useEffect } from 'react';
 import { useWaitlistContext } from '../context/WaitlistContext';
 
 const WaitlistTable = () => {
-    const waitlist = useWaitlistContext();
-    // const [waitlist, setWaitlist] = useState([]);
-    console.log('waiter');
-    console.log(waitlist);
-
     return (
         <Container>
             <Table striped bordered hover>
@@ -24,14 +18,6 @@ const WaitlistTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>2</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                    </tr> */}
                     {AddWaitlistRow()}
                 </tbody>
             </Table>
@@ -45,19 +31,27 @@ const AddWaitlistRow = () => {
 
     return (
         waitlist.map((entry, index) => {
+            
             return (
                 <tr key={entry.phone}>
                     <td>{index + 1}</td>
                     <td>{entry.name}</td>
                     <td>{entry.phone}</td>
                     <td>{entry.size}</td>
-                    <td>{entry.time}</td>
+                    <td>{formatTime(entry.time)}</td>
                     <td>{entry.notes}</td>
                     <td>actions</td>
                 </tr>
             )
         })
     );
+}
+
+const formatTime = (datetime) => {
+    const [date, time] = datetime.split('T');
+    const [hours, mins, secs] = time.split(':');
+    const formattedTime = `${date} @ ${hours}:${mins}`;
+    return formattedTime;
 }
 
 export default WaitlistTable;
