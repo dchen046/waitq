@@ -1,12 +1,12 @@
 
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import AddReservationForm from "./AddReservationForm";
 import { HiUserGroup } from "react-icons/hi";
 
 
-const AddReservationModal = () => {
+const AddReservationModal = memo(() => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -36,6 +36,8 @@ const AddReservationModal = () => {
             </Modal>
         </>
     );
-}
+})
+
+AddReservationModal.displayName = 'AddReservationModal';
 
 export default AddReservationModal;

@@ -77,3 +77,19 @@ export const addBusiness = async (name, addr, phone, email, uid) => {
         return [err, null];
     }
 }
+
+export const getReservations = async (start, end) => {
+    try {
+        const waitlist = await prisma.reservations.findMany({
+            where: {
+                time: {
+                    gte: start, 
+                    lte: end
+                }
+            }
+        })
+        return [null, waitlist];
+    } catch (err) {
+        return [err, null];
+    }
+}

@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useTokenStatusContext, useTokenUpdateContext } from '../context/TokenContext';
+import { useTokenStatusContext, useTokenUpdateContext } from '../../context/TokenContext';
 import Container from 'react-bootstrap/esm/Container';
 
 const LoginPage = () => {
