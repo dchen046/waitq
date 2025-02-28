@@ -1,11 +1,16 @@
+import { WaitlistProvider } from "../context/WaitlistProvider";
 import AddReservationModal from "./Modals/AddReservationModal"
 import AddWaitlistModal from "./Modals/AddWaitlistModal";
+import WaitlistTable from "./WaitlistTable";
 
 const Waitlist = () => {
     return (
         <>
-            <AddWaitlistModal />
-            <AddReservationModal />
+            <WaitlistProvider>
+                <AddWaitlistModal />
+                <AddReservationModal />
+                <WaitlistTable />
+            </WaitlistProvider>
         </>
     );
 }

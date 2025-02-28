@@ -1,11 +1,11 @@
 
 import { MdGroupAdd } from "react-icons/md";
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import AddWaitlistForm from "./AddWaitlistForm";
 
-const AddWaitlistModal = () => {
+const AddWaitlistModal = memo( () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -29,6 +29,8 @@ const AddWaitlistModal = () => {
             </Modal>
         </>
     );
-}
+});
+
+AddWaitlistModal.displayName = 'AddWaitListModal';
 
 export default AddWaitlistModal;
