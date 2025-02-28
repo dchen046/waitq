@@ -45,11 +45,15 @@ const AddWaitlistRow = () => {
                     <td>{formatTime(entry.time)}</td>
                     <td>{entry.notes}</td>
                     <td>
-                        <Button variant='danger'>
+                        <Button variant='danger m-2' size='sm'>
                             <MdDelete />
                         </Button>
 
-                        <Button variant='success'>
+                        <Button variant='warning m-2' size='sm'>
+                            <FaEdit />
+                        </Button>
+
+                        <Button variant='success m-2' size='sm'>
                             <FaCheck />
                         </Button>
                     </td>
