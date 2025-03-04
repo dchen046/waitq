@@ -1,7 +1,7 @@
 import { Router } from "express";
 import jwt from 'jsonwebtoken';
 import { verifyToken } from "../utility/verify.js";
-import { addToWaitlist, deleteReservation, getTodaysReservations } from "../controllers/waitlistController.js";
+import { addToWaitlist, confirmRes, deleteReservation, getTodaysReservations } from "../controllers/waitlistController.js";
 
 const waitlistRouter = Router();
 
@@ -28,6 +28,10 @@ waitlistRouter.post("/add-reservation", verifyToken, (req, res) => {
         }
     })
 });
+
+waitlistRouter.put("/confirm/:phone", verifyToken, (req, res) => {
+    confirmRes(req, res);
+})
 
 
 

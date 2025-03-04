@@ -33,17 +33,14 @@ const WaitlistTable = () => {
 
 const AddWaitlistRow = () => {
     const waitlist = useWaitlistContext();
-    const removeFromWaitlist = useWaitlistUpdateContext();
+    const waitlistUpdater = useWaitlistUpdateContext();
 
     return (
         waitlist.map((entry, index) => {
 
             // delete button
             const handleDelete = async () => {
-                console.log('Clicked Delete');
-                console.log(entry.phone);
                 const url = `http://localhost:3000/api/waitlist/delete/${entry.phone}`;
-                console.log(url);
                 const auth = `Bearer ${localStorage.getItem('jwt')}`
                 const response = await fetch(url, {
                     method: 'DELETE',
@@ -53,8 +50,25 @@ const AddWaitlistRow = () => {
                 })
                 if (!response.ok) console.log(`Response status: ${response.status}`);
                 else {
-                    removeFromWaitlist(entry.phone);
+                    waitlistUpdater.removeFromWaitlist(entry.phone);
                 }
+            }
+
+            // confirm button
+            const handleConfirm = async () => {
+                const url = `http://localhost:3000/api/waitlist/confirm/${entry.phone}`;
+                const auth = `Bearer ${localStorage.getItem('jwt')}`
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'authorization': auth
+                    },
+                })
+                if (!response.ok) console.log(`Response status: ${response.status}`);
+                else {
+                    waitlistUpdater.removeFromWaitlist(entry.phone);
+                }
+
             }
 
             return (
@@ -78,7 +92,7 @@ const AddWaitlistRow = () => {
                             <MdDelete />
                         </Button>
 
-                        <Button variant='success' size='sm' className='m-2'>
+                        <Button variant='success' size='sm' className='m-2' onClick={handleConfirm}>
                             <FaCheck />
                         </Button>
                     </td>
@@ -89,7 +103,7 @@ const AddWaitlistRow = () => {
 }
 
 const formatTime = (datetime) => {
-    const [date, time] = datetime.split('T');
+    const [, time] = datetime.split('T');
     const [hours, mins] = time.split(':');
     // const formattedTime = `${date} ${hours}:${mins}`;
     const formattedTime = `${hours - 12}:${mins} ${hours >= 12 ? 'PM' : 'AM'}`;

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { addWaitlist, getReservations, removeReservation } from "../db/queries.js";
+import { addWaitlist, confirmReservation, getReservations, removeReservation } from "../db/queries.js";
 import { formatTime, getTodaysRange } from "../utility/time.js";
 
 
@@ -51,6 +51,19 @@ export const deleteReservation = (req, res) => {
     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
         const phone = req.params.phone;
         const [error, entry] = await removeReservation(phone);
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(entry);
+            res.sendStatus(200);
+        }
+    })
+}
+
+export const confirmRes = (req, res) => {
+    jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
+        const phone = req.params.phone;
+        const [error, entry] = await confirmReservation(phone);
         if (error) {
             console.log(error);
         } else {

@@ -30,7 +30,7 @@ export const WaitlistProvider = ({ children }) => {
 
     return (
         <WaitlistContext.Provider value={waitlist}>
-            <WaitlistUpdateContext.Provider value={removeFromWaitlist} >
+            <WaitlistUpdateContext.Provider value={{removeFromWaitlist, updateWaitlist}} >
                 {children}
             </WaitlistUpdateContext.Provider>
         </WaitlistContext.Provider>

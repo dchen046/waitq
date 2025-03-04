@@ -29,7 +29,7 @@ export const addUser = async (email, password) => {
     return newUser;
 }
 
-export const addWaitlist = async (name, size, time, phone, business_name, notes ='') => {
+export const addWaitlist = async (name, size, time, phone, business_name, notes = '') => {
     try {
         const entry = await prisma.reservations.create({
             data: {
@@ -83,7 +83,7 @@ export const getReservations = async (start, end) => {
         const waitlist = await prisma.reservations.findMany({
             where: {
                 time: {
-                    gte: start, 
+                    gte: start,
                     lte: end
                 }
             }
@@ -102,6 +102,27 @@ export const removeReservation = async (phone) => {
             }
         })
         return [null, waitlist];
+    } catch (err) {
+        return [err, null];
+    }
+}
+
+export const confirmReservation = async (phone) => {
+    try {
+        const [err, confirmedRes] = await removeReservation(phone);
+        if (err) console.log(err);
+        else {
+            const confirmedReservation = await prisma.confirmed_reservations.create({
+                data: {
+                    name: confirmedRes.name,
+                    size: confirmedRes.size,
+                    time: confirmedRes.time,
+                    phone: confirmedRes.phone,
+                    b_name: confirmedRes.b_name
+                }
+            });
+            return [null, confirmedReservation]
+        }
     } catch (err) {
         return [err, null];
     }

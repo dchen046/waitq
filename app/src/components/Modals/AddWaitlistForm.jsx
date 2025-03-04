@@ -17,8 +17,7 @@ const getWaittime = (mins = 15) => {
 
 const AddWaitlistForm = ({ handleClose }) => {
     const waittime = useRef(getWaittime());
-    const updateWaitlist = useWaitlistUpdateContext();
-
+    const waitlistUpdater = useWaitlistUpdateContext();
     const handlePicker = (e) => {
         e.currentTarget.showPicker();
         console.log(e.currentTarget.value);
@@ -50,7 +49,7 @@ const AddWaitlistForm = ({ handleClose }) => {
 
         if (!response.ok) console.log(`Response status: ${response.status}`);
         else {
-            updateWaitlist();
+            waitlistUpdater.updateWaitlist();
             handleClose();
         }
     }
