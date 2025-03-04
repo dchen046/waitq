@@ -19,6 +19,10 @@ export const WaitlistProvider = ({ children }) => {
         setWaitlist(result.reservations);
     }
 
+    const removeFromWaitlist = (phone) => {
+        setWaitlist(waitlist.filter(item => item.phone != phone));
+    }
+
     useEffect(() => {
         console.log('effect');
         updateWaitlist();
@@ -26,7 +30,7 @@ export const WaitlistProvider = ({ children }) => {
 
     return (
         <WaitlistContext.Provider value={waitlist}>
-            <WaitlistUpdateContext.Provider value={updateWaitlist} >
+            <WaitlistUpdateContext.Provider value={removeFromWaitlist} >
                 {children}
             </WaitlistUpdateContext.Provider>
         </WaitlistContext.Provider>

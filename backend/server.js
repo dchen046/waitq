@@ -29,7 +29,7 @@ app.use(express.static(__dirname + '/public'));
 // cors
 const corsOptions = {
     origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
 }
 app.use(cors(corsOptions));
 

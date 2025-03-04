@@ -93,3 +93,16 @@ export const getReservations = async (start, end) => {
         return [err, null];
     }
 }
+
+export const removeReservation = async (phone) => {
+    try {
+        const waitlist = await prisma.reservations.delete({
+            where: {
+                phone: phone
+            }
+        })
+        return [null, waitlist];
+    } catch (err) {
+        return [err, null];
+    }
+}

@@ -1,6 +1,6 @@
 import Container from 'react-bootstrap/esm/Container';
 import Table from 'react-bootstrap/Table';
-import { useWaitlistContext } from '../context/WaitlistContext';
+import { useWaitlistContext, useWaitlistUpdateContext } from '../context/WaitlistContext';
 import { MdDelete, MdNotificationsActive } from "react-icons/md";
 import { FaEdit, FaCheck } from "react-icons/fa";
 import { Button } from 'react-bootstrap';
@@ -33,14 +33,35 @@ const WaitlistTable = () => {
 
 const AddWaitlistRow = () => {
     const waitlist = useWaitlistContext();
+    const removeFromWaitlist = useWaitlistUpdateContext();
 
     return (
         waitlist.map((entry, index) => {
+
+            // delete button
+            const handleDelete = async () => {
+                console.log('Clicked Delete');
+                console.log(entry.phone);
+                const url = `http://localhost:3000/api/waitlist/delete/${entry.phone}`;
+                console.log(url);
+                const auth = `Bearer ${localStorage.getItem('jwt')}`
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'authorization': auth
+                    },
+                })
+                if (!response.ok) console.log(`Response status: ${response.status}`);
+                else {
+                    removeFromWaitlist(entry.phone);
+                }
+            }
+
             return (
                 <tr key={entry.phone}>
                     <td>{index + 1}</td>
                     <td>{entry.name}</td>
-                    <td>{entry.phone ? '123-123-1234' : '123'}</td>
+                    <td>{entry.phone}</td>
                     <td>{entry.size}</td>
                     <td>{formatTime(entry.time)}</td>
                     <td>{entry.notes}</td>
@@ -53,7 +74,7 @@ const AddWaitlistRow = () => {
                             <FaEdit />
                         </Button>
 
-                        <Button variant='danger' size='sm' className='m-2'>
+                        <Button variant='danger' size='sm' className='m-2' onClick={handleDelete}>
                             <MdDelete />
                         </Button>
 
