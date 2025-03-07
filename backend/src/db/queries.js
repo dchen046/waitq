@@ -29,7 +29,7 @@ export const addUser = async (email, password) => {
     return newUser;
 }
 
-export const addWaitlist = async (name, size, time, phone, business_name, notes ='') => {
+export const addWaitlist = async (name, size, time, phone, email, business_name, notes = '') => {
     try {
         const entry = await prisma.reservations.create({
             data: {
@@ -37,10 +37,13 @@ export const addWaitlist = async (name, size, time, phone, business_name, notes 
                 size: size,
                 time: time,
                 phone: phone,
+                email: email,
                 notes: notes,
                 b_name: business_name
             }
         })
+        console.log('time: ' + time);
+        console.log(entry);
         return [null, entry];
     } catch (err) {
         return [err, null];
@@ -83,12 +86,47 @@ export const getReservations = async (start, end) => {
         const waitlist = await prisma.reservations.findMany({
             where: {
                 time: {
-                    gte: start, 
+                    gte: start,
                     lte: end
                 }
             }
         })
         return [null, waitlist];
+    } catch (err) {
+        return [err, null];
+    }
+}
+
+export const removeReservation = async (phone) => {
+    try {
+        const waitlist = await prisma.reservations.delete({
+            where: {
+                phone: phone
+            }
+        })
+        return [null, waitlist];
+    } catch (err) {
+        return [err, null];
+    }
+}
+
+// moves a reservation to confirmed reservation table
+export const confirmReservation = async (phone) => {
+    try {
+        const [err, confirmedRes] = await removeReservation(phone);
+        if (err) console.log(err);
+        else {
+            const confirmedReservation = await prisma.confirmed_reservations.create({
+                data: {
+                    name: confirmedRes.name,
+                    size: confirmedRes.size,
+                    time: confirmedRes.time,
+                    phone: confirmedRes.phone,
+                    b_name: confirmedRes.b_name
+                }
+            });
+            return [null, confirmedReservation]
+        }
     } catch (err) {
         return [err, null];
     }

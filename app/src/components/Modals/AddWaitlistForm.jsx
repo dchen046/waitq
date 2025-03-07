@@ -17,8 +17,7 @@ const getWaittime = (mins = 15) => {
 
 const AddWaitlistForm = ({ handleClose }) => {
     const waittime = useRef(getWaittime());
-    const updateWaitlist = useWaitlistUpdateContext();
-
+    const waitlistUpdater = useWaitlistUpdateContext();
     const handlePicker = (e) => {
         e.currentTarget.showPicker();
         console.log(e.currentTarget.value);
@@ -31,11 +30,15 @@ const AddWaitlistForm = ({ handleClose }) => {
         const auth = `Bearer ${localStorage.getItem('jwt')}`
         const current = JSON.parse(localStorage.getItem('current-business'));
 
+        console.log('time: ' + formData.get('wait-time'));
+
         const body = JSON.stringify({
             name: formData.get('wait-name'),
             size: formData.get('wait-size'),
             phone: formData.get('wait-phone'),
             time: formData.get('wait-time'),
+            email: formData.get('wait-email'),
+            notes: formData.get('wait-notes'),
             b_name: current.name
         })
 
@@ -50,7 +53,7 @@ const AddWaitlistForm = ({ handleClose }) => {
 
         if (!response.ok) console.log(`Response status: ${response.status}`);
         else {
-            updateWaitlist();
+            waitlistUpdater.updateWaitlist();
             handleClose();
         }
     }
@@ -80,6 +83,15 @@ const AddWaitlistForm = ({ handleClose }) => {
                                 required
                             />
                         </Form.Group>
+                        <Form.Group className="mb-3 me-3" controlId="wait-email">
+                            <Form.Label className='p-0'>Email:</Form.Label>
+                            <Form.Control
+                                type='email'
+                                name='wait-email'
+                                placeholder="email"
+                                aria-label="email"
+                            />
+                        </Form.Group>
                     </div>
                     <div>
                         <Form.Group className="mb-3" controlId="wait-size">
@@ -101,6 +113,15 @@ const AddWaitlistForm = ({ handleClose }) => {
                                 aria-label="waittime"
                                 onClick={handlePicker}
                                 required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="wait-notes">
+                            <Form.Label className='p-0'>Notes:</Form.Label>
+                            <Form.Control
+                                type='text'
+                                name='wait-notes'
+                                placeholder="notes"
+                                aria-label="notes"
                             />
                         </Form.Group>
                         <div className="d-flex justify-content-end">

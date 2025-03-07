@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import jwt from 'jsonwebtoken';
-import { getBusinesses } from "../db/queries.js";
+import { addBusiness, getBusinesses } from "../db/queries.js";
 const authRouter = Router();
 
 authRouter.post("/login", (req, res) => {
@@ -19,6 +19,7 @@ authRouter.post("/login", (req, res) => {
                         }
                         jwt.sign({ user }, process.env.JWT_KEY, options, async (err, token) => {
                             // console.log(token);
+                            // await addBusiness('testb','','','1@gmail.com', 1);
                             const [qerr, businesses] = await getBusinesses(user.id);
                             if (qerr) {
                                 res.sendStatus(400);

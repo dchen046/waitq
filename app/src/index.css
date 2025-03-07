@@ -83,3 +83,11 @@ button:focus-visible {
 .error-msg {
   color: red;
 }
+
+.custom-width {
+  width: 20%;
+}
+
+.w-10 {
+  width: 10%;
+}
