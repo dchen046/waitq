@@ -29,7 +29,7 @@ export const addUser = async (email, password) => {
     return newUser;
 }
 
-export const addWaitlist = async (name, size, time, phone, business_name, notes = '') => {
+export const addWaitlist = async (name, size, time, phone, email, business_name, notes = '') => {
     try {
         const entry = await prisma.reservations.create({
             data: {
@@ -37,6 +37,7 @@ export const addWaitlist = async (name, size, time, phone, business_name, notes 
                 size: size,
                 time: time,
                 phone: phone,
+                email: email,
                 notes: notes,
                 b_name: business_name
             }

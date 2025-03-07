@@ -37,6 +37,7 @@ const AddWaitlistForm = ({ handleClose }) => {
             size: formData.get('wait-size'),
             phone: formData.get('wait-phone'),
             time: formData.get('wait-time'),
+            email: formData.get('wait-email'),
             notes: formData.get('wait-notes'),
             b_name: current.name
         })

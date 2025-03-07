@@ -73,14 +73,23 @@ const AddWaitlistRow = () => {
             // notification button
             const handleNotification = async () => {
                 console.log('noti');
-                const url = `http://localhost:3000/api/waitlist/notify`;
+                console.log('name ',entry.name);
+                console.log('email: ', entry.email);
+                const url = `http://localhost:3000/api/waitlist/notify-email`;
                 const auth = `Bearer ${localStorage.getItem('jwt')}`
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
+                        'Content-Type': 'application/json',
                         'authorization': auth
                     },
-                })
+                    body: JSON.stringify({
+                        name: entry.name,
+                        email: entry.email,
+                    }),
+                });
+                
+                
                 if (!response.ok) console.log(`Response status: ${response.status}`);
                 else {
                     console.log('notified');

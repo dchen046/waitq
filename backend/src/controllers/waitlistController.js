@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { addWaitlist, confirmReservation, getReservations, removeReservation } from "../db/queries.js";
 import { formatTime, getTodaysRange } from "../utility/time.js";
 import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
-
+import { sendEmail } from '../utility/sendEmail.js';
 
 export const addToWaitlist = (req, res) => {
     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
@@ -16,6 +16,7 @@ export const addToWaitlist = (req, res) => {
                     req.body.size,
                     date,
                     req.body.phone,
+                    req.body.email,
                     req.body.b_name,
                     req.body.notes
                 )
@@ -73,6 +74,18 @@ export const confirmRes = (req, res) => {
         }
     })
 }
+
+export const notifyResEmail = (req, res) => {
+    jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
+        console.log('inside resemail');
+        const name = req.body.name;
+        const email = req.body.email;
+        await sendEmail(email);
+        console.log(`finished sending email to ${name}`);
+    });
+}
+
+
 
 // export const notifyRes = (req, res) => {
 //     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
