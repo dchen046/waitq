@@ -33,6 +33,10 @@ waitlistRouter.put("/confirm/:phone", verifyToken, (req, res) => {
     confirmRes(req, res);
 })
 
+waitlistRouter.post("/notify", verifyToken, (req, res) => {
+    // notifyRes(req, res);
+})
+
 
 
 

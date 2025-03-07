@@ -15,7 +15,7 @@ const WaitlistTable = () => {
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Phone</th>
+                            <th>Email</th>
                             <th>Size</th>
                             <th>Time</th>
                             <th className='w-25'>Notes</th>
@@ -68,19 +68,35 @@ const AddWaitlistRow = () => {
                 else {
                     waitlistUpdater.removeFromWaitlist(entry.phone);
                 }
+            }
 
+            // notification button
+            const handleNotification = async () => {
+                console.log('noti');
+                const url = `http://localhost:3000/api/waitlist/notify`;
+                const auth = `Bearer ${localStorage.getItem('jwt')}`
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'authorization': auth
+                    },
+                })
+                if (!response.ok) console.log(`Response status: ${response.status}`);
+                else {
+                    console.log('notified');
+                }
             }
 
             return (
                 <tr key={entry.phone}>
                     <td>{index + 1}</td>
                     <td>{entry.name}</td>
-                    <td>{entry.phone}</td>
+                    <td>{entry.email}</td>
                     <td>{entry.size}</td>
                     <td>{formatTime(entry.time)}</td>
                     <td>{entry.notes}</td>
                     <td>
-                        <Button variant='warning' className='m-2' size='sm'>
+                        <Button variant='warning' className='m-2' size='sm' onClick={handleNotification}>
                             <MdNotificationsActive />
                         </Button>
 
@@ -103,11 +119,17 @@ const AddWaitlistRow = () => {
 }
 
 const formatTime = (datetime) => {
-    const [, time] = datetime.split('T');
+    const localTime = utcConverter(datetime);
+    const [, time, tod] = localTime.split(' ');
     const [hours, mins] = time.split(':');
-    // const formattedTime = `${date} ${hours}:${mins}`;
-    const formattedTime = `${hours - 12}:${mins} ${hours >= 12 ? 'PM' : 'AM'}`;
+    const formattedTime = `${hours}:${mins} ${tod}`;
     return formattedTime;
+}
+
+const utcConverter = (datetime) => {
+    const date = new Date(datetime);
+    const local = date.toLocaleString("en-US", { timeZone: 'America/New_York' });
+    return local;
 }
 
 export default WaitlistTable;

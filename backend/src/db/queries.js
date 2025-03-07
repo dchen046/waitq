@@ -41,6 +41,8 @@ export const addWaitlist = async (name, size, time, phone, business_name, notes 
                 b_name: business_name
             }
         })
+        console.log('time: ' + time);
+        console.log(entry);
         return [null, entry];
     } catch (err) {
         return [err, null];
@@ -107,6 +109,7 @@ export const removeReservation = async (phone) => {
     }
 }
 
+// moves a reservation to confirmed reservation table
 export const confirmReservation = async (phone) => {
     try {
         const [err, confirmedRes] = await removeReservation(phone);

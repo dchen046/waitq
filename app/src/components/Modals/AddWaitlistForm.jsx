@@ -30,11 +30,14 @@ const AddWaitlistForm = ({ handleClose }) => {
         const auth = `Bearer ${localStorage.getItem('jwt')}`
         const current = JSON.parse(localStorage.getItem('current-business'));
 
+        console.log('time: ' + formData.get('wait-time'));
+
         const body = JSON.stringify({
             name: formData.get('wait-name'),
             size: formData.get('wait-size'),
             phone: formData.get('wait-phone'),
             time: formData.get('wait-time'),
+            notes: formData.get('wait-notes'),
             b_name: current.name
         })
 
@@ -79,6 +82,15 @@ const AddWaitlistForm = ({ handleClose }) => {
                                 required
                             />
                         </Form.Group>
+                        <Form.Group className="mb-3 me-3" controlId="wait-email">
+                            <Form.Label className='p-0'>Email:</Form.Label>
+                            <Form.Control
+                                type='email'
+                                name='wait-email'
+                                placeholder="email"
+                                aria-label="email"
+                            />
+                        </Form.Group>
                     </div>
                     <div>
                         <Form.Group className="mb-3" controlId="wait-size">
@@ -100,6 +112,15 @@ const AddWaitlistForm = ({ handleClose }) => {
                                 aria-label="waittime"
                                 onClick={handlePicker}
                                 required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="wait-notes">
+                            <Form.Label className='p-0'>Notes:</Form.Label>
+                            <Form.Control
+                                type='text'
+                                name='wait-notes'
+                                placeholder="notes"
+                                aria-label="notes"
                             />
                         </Form.Group>
                         <div className="d-flex justify-content-end">

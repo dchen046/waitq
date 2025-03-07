@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { addWaitlist, confirmReservation, getReservations, removeReservation } from "../db/queries.js";
 import { formatTime, getTodaysRange } from "../utility/time.js";
+import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
 
 
 export const addToWaitlist = (req, res) => {
@@ -8,7 +9,6 @@ export const addToWaitlist = (req, res) => {
         if (err) res.sendStatus(403);
         else {
             const date = formatTime(req.body.time);
-            console.log(date);
 
             const [error, entry] =
                 await addWaitlist(
@@ -16,13 +16,14 @@ export const addToWaitlist = (req, res) => {
                     req.body.size,
                     date,
                     req.body.phone,
-                    req.body.b_name
+                    req.body.b_name,
+                    req.body.notes
                 )
             if (error) {
                 console.log(error);
             }
             else {
-                console.log(entry);
+                // console.log(entry);
                 res.sendStatus(200);
             }
         }
@@ -38,7 +39,7 @@ export const getTodaysReservations = (req, res) => {
             if (error) {
                 console.log(error);
             } else {
-                console.log(reservations);
+                // console.log(reservations);
                 res.json({
                     reservations
                 })
@@ -72,3 +73,34 @@ export const confirmRes = (req, res) => {
         }
     })
 }
+
+// export const notifyRes = (req, res) => {
+//     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
+//         const params = {
+//             Message: "Hello this is a test",
+//             PhoneNumber: process.env.PHONE,
+//             MessageAttributes: {
+//                 'AWS.SNS.SMS.SMSType': {
+//                     DataType: 'String',
+//                     StringValue: 'Transactional'
+//                 }
+//             }
+//         }
+
+//         const sns = new SNSClient({
+//             region: process.env.REGION,
+//             credentials: {
+//                 accessKeyId: process.env.AWS_ACCESS_KEY,
+//                 secretAccessKey: process.env.AWS_SECRET_KEY
+//             }
+//         })
+//         const message = await sendSNSMessage(sns, params);
+//         console.log(message);
+//     })
+// }
+
+// const sendSNSMessage = async (sns, params) => {
+//     const command = new PublishCommand(params);
+//     const message = await sns.send(command);
+//     return message;
+// }

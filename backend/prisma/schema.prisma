@@ -36,7 +36,8 @@ model reservations {
   name  String
   size  String
   time  DateTime
-  phone String   @unique
+  phone String
+  email String   @unique
   notes String
 
   b_name   String
