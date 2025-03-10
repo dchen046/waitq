@@ -23,9 +23,8 @@ const ProfileNav = () => {
                         className="flex-grow-1 justify-content-evenly"
                         activeKey={location.pathname}
                     >
-                        <Nav.Link eventKey="/profile" href="/profile">Profile</Nav.Link>
+                        <Nav.Link eventKey="/home/profile" href="/home/profile">Profile</Nav.Link>
                         <Nav.Link eventKey="/home/waitlist" href="/home/waitlist">Waitlist</Nav.Link>
-
                         <Nav.Link eventKey="/home/layout" href="/home/layout">Layout</Nav.Link>
                         
                     </Nav>

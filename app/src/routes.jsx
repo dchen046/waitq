@@ -1,7 +1,7 @@
-
 import App from './App.jsx'
 import LoginPage from './components/Pages/LoginPage.jsx';
 import SignupPage from './components/Pages/SignupPage.jsx';
+import ProfilePage from './components/Pages/ProfilePage.jsx';
 import Waitlist from './components/Waitlist.jsx';
 
 const routes = [
@@ -19,8 +19,9 @@ const routes = [
     children: [
       {path: 'waitlist', element: <Waitlist />},
       {path: 'layout', element: <p>hi</p>},
+      {path: 'profile', element: <ProfilePage />}
     ]
-  }
+  },
 ]
 
 export default routes;

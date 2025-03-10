@@ -4,9 +4,11 @@ import AddWaitlistModal from "./Modals/AddWaitlistModal";
 import WaitlistTable from "./WaitlistTable";
 
 const Waitlist = () => {
+    const user = JSON.parse(localStorage.getItem('current-business'));
     return (
         <>
             <WaitlistProvider>
+                <h1>Welcome Back {user.name}</h1>
                 <AddWaitlistModal />
                 <AddReservationModal />
                 <WaitlistTable />

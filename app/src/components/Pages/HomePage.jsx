@@ -14,12 +14,9 @@ const Home = () => {
 }
 
 const HomePage = () => {
-
-    const user = JSON.parse(localStorage.getItem('current-business'));
     return (
         <div>
             <ProfileNav />
-            <h1>Welcome Back {user.name}</h1>
             <Outlet />
         </div>
     )
