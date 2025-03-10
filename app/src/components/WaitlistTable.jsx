@@ -4,6 +4,7 @@ import { useWaitlistContext, useWaitlistUpdateContext } from '../context/Waitlis
 import { MdDelete, MdNotificationsActive } from "react-icons/md";
 import { FaEdit, FaCheck } from "react-icons/fa";
 import { Button } from 'react-bootstrap';
+import { useEffect, useRef } from 'react';
 
 const WaitlistTable = () => {
     return (
@@ -34,10 +35,10 @@ const WaitlistTable = () => {
 const AddWaitlistRow = () => {
     const waitlist = useWaitlistContext();
     const waitlistUpdater = useWaitlistUpdateContext();
+    const statuses = useRef([]);
 
     return (
         waitlist.map((entry, index) => {
-
             // delete button
             const handleDelete = async () => {
                 const url = `http://localhost:3000/api/waitlist/delete/${entry.phone}`;
@@ -51,6 +52,7 @@ const AddWaitlistRow = () => {
                 if (!response.ok) console.log(`Response status: ${response.status}`);
                 else {
                     waitlistUpdater.removeFromWaitlist(entry.phone);
+                    statuses.current[index].remove();
                 }
             }
 
@@ -67,14 +69,14 @@ const AddWaitlistRow = () => {
                 if (!response.ok) console.log(`Response status: ${response.status}`);
                 else {
                     waitlistUpdater.removeFromWaitlist(entry.phone);
+                    statuses.current[index].remove();
                 }
             }
 
             // notification button
-            const handleNotification = async () => {
+            const handleNotification = async (e) => {
                 console.log('noti');
-                console.log('name ',entry.name);
-                console.log('email: ', entry.email);
+                e.currentTarget.disabled = true;
                 const url = `http://localhost:3000/api/waitlist/notify-email`;
                 const auth = `Bearer ${localStorage.getItem('jwt')}`
                 const user = JSON.parse(localStorage.getItem('current-business'));
@@ -93,14 +95,18 @@ const AddWaitlistRow = () => {
                 });
                 
                 
-                if (!response.ok) console.log(`Response status: ${response.status}`);
+                if (!response.ok) {
+                    console.log(`Response status: ${response.status}`)
+                    return;
+                }
                 else {
                     console.log('notified');
+                    e.currentTarget.disabled = true;
                 }
             }
 
             return (
-                <tr key={entry.phone}>
+                <tr key={entry.phone} className='text-center align-middle'>
                     <td>{index + 1}</td>
                     <td>{entry.name}</td>
                     <td>{entry.email}</td>
@@ -112,9 +118,9 @@ const AddWaitlistRow = () => {
                             <MdNotificationsActive />
                         </Button>
 
-                        <Button variant='secondary' size='sm' className='m-2'>
+                        {/* <Button variant='secondary' size='sm' className='m-2'>
                             <FaEdit />
-                        </Button>
+                        </Button> */}
 
                         <Button variant='danger' size='sm' className='m-2' onClick={handleDelete}>
                             <MdDelete />
