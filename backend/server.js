@@ -7,13 +7,12 @@ import session from 'express-session';
 import passport from 'passport';
 import './src/strategies/local.js';
 import cors from 'cors';
-import flash from 'express-flash'
 
 // routers
 import authRouter from './src/routes/authRouter.js';
 import signupRouter from './src/routes/signupRouter.js';
 import waitlistRouter from './src/routes/waitlistRouter.js';
-import { addBusiness } from './src/db/queries.js';
+import profileRouter from './src/routes/profileRouter.js';
 
 const app = express();
 
@@ -29,7 +28,7 @@ app.use(express.static(__dirname + '/public'));
 // cors
 const corsOptions = {
     origin: "http://localhost:5173",
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
 }
 app.use(cors(corsOptions));
 
@@ -52,6 +51,7 @@ app.get("/", (req, res) => res.send("Hello, world!"));
 app.use("/api/auth", authRouter);
 app.use("/api/register", signupRouter);
 app.use("/api/waitlist", waitlistRouter);
+app.use("/api/profile", profileRouter);
 // app.use("api/business". businessRouter);
 
 // app port

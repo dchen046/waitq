@@ -131,3 +131,23 @@ export const confirmReservation = async (email) => {
         return [err, null];
     }
 }
+
+
+export const updateBusiness = async (businessName, email, phone, address) => {
+    try {
+        // console.log('inside update');
+        const business = await prisma.businesses.update({
+            where: {
+                name: businessName
+            },
+            data: {
+                email: email,
+                phone: phone,
+                address: address
+            }
+        });
+        return [null, business];
+    } catch (err) {
+        return [err, null];
+    }
+}

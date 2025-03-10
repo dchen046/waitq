@@ -2,9 +2,8 @@ import Container from 'react-bootstrap/esm/Container';
 import Table from 'react-bootstrap/Table';
 import { useWaitlistContext, useWaitlistUpdateContext } from '../context/WaitlistContext';
 import { MdDelete, MdNotificationsActive } from "react-icons/md";
-import { FaEdit, FaCheck } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import { Button } from 'react-bootstrap';
-import { useEffect, useRef } from 'react';
 
 const WaitlistTable = () => {
     return (
