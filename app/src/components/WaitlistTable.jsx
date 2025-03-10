@@ -77,6 +77,8 @@ const AddWaitlistRow = () => {
                 console.log('email: ', entry.email);
                 const url = `http://localhost:3000/api/waitlist/notify-email`;
                 const auth = `Bearer ${localStorage.getItem('jwt')}`
+                const user = JSON.parse(localStorage.getItem('current-business'));
+
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
@@ -85,7 +87,8 @@ const AddWaitlistRow = () => {
                     },
                     body: JSON.stringify({
                         name: entry.name,
-                        email: entry.email,
+                        toEmail: entry.email,
+                        business: user.name
                     }),
                 });
                 

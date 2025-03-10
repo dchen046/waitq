@@ -75,17 +75,17 @@ export const confirmRes = (req, res) => {
     })
 }
 
-export const notifyResEmail = (req, res) => {
+export const notifyByEmail = (req, res) => {
     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
         console.log('inside resemail');
         const name = req.body.name;
-        const email = req.body.email;
-        await sendEmail(email);
+        const toEmail = req.body.toEmail;
+        const business = req.body.business;
+        // const fromEmail = req.body.fromEmail;
+        sendEmail(toEmail, business);
         console.log(`finished sending email to ${name}`);
     });
 }
-
-
 
 // export const notifyRes = (req, res) => {
 //     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {

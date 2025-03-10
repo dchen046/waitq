@@ -1,7 +1,7 @@
 import { Router } from "express";
 import jwt from 'jsonwebtoken';
 import { verifyToken } from "../utility/verify.js";
-import { addToWaitlist, confirmRes, deleteReservation, getTodaysReservations, notifyResEmail } from "../controllers/waitlistController.js";
+import { addToWaitlist, confirmRes, deleteReservation, getTodaysReservations, notifyByEmail } from "../controllers/waitlistController.js";
 
 const waitlistRouter = Router();
 
@@ -35,10 +35,7 @@ waitlistRouter.put("/confirm/:phone", verifyToken, (req, res) => {
 
 waitlistRouter.post("/notify-email", verifyToken, (req, res) => {
     // notifyRes(req, res);
-    notifyResEmail(req, res);
+    notifyByEmail(req, res);
 })
-
-
-
 
 export default waitlistRouter;
