@@ -4,11 +4,12 @@ import { formatTime, getTodaysRange } from "../utility/time.js";
 import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
 import { sendEmail } from '../utility/sendEmail.js';
 
-export const addToWaitlist = (req, res) => {
+export const addToWaitlist = (req, res, wait=true) => {
     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
         if (err) res.sendStatus(403);
         else {
-            const date = formatTime(req.body.time);
+            console.log(req.body.time);
+            const date = wait ? formatTime(req.body.time) : new Date(req.body.time);
 
             const [error, entry] =
                 await addWaitlist(
@@ -51,7 +52,7 @@ export const getTodaysReservations = (req, res) => {
 
 export const deleteReservation = (req, res) => {
     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
-        const phone = req.params.phone;
+        const phone = req.params.email;
         const [error, entry] = await removeReservation(phone);
         if (error) {
             console.log(error);
@@ -64,8 +65,8 @@ export const deleteReservation = (req, res) => {
 
 export const confirmRes = (req, res) => {
     jwt.verify(req.token, process.env.JWT_KEY, async (err, user) => {
-        const phone = req.params.phone;
-        const [error, entry] = await confirmReservation(phone);
+        const email = req.params.email;
+        const [error, entry] = await confirmReservation(email);
         if (error) {
             console.log(error);
         } else {

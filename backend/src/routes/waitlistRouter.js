@@ -13,7 +13,7 @@ waitlistRouter.get('/today', verifyToken, (req, res) => {
     getTodaysReservations(req, res);
 })
 
-waitlistRouter.delete('/delete/:phone', verifyToken, (req,res) => {
+waitlistRouter.delete('/delete/:email', verifyToken, (req,res) => {
     deleteReservation(req, res);
 })
 
@@ -21,15 +21,12 @@ waitlistRouter.post("/add-reservation", verifyToken, (req, res) => {
     jwt.verify(req.token, process.env.JWT_KEY, (err, user) => {
         if (err) res.sendStatus(403);
         else {
-            res.json({
-                message: 'Post Created',
-                user
-            });
+            addToWaitlist(req, res, false);
         }
     })
 });
 
-waitlistRouter.put("/confirm/:phone", verifyToken, (req, res) => {
+waitlistRouter.put("/confirm/:email", verifyToken, (req, res) => {
     confirmRes(req, res);
 })
 

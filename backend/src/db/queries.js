@@ -97,11 +97,11 @@ export const getReservations = async (start, end) => {
     }
 }
 
-export const removeReservation = async (phone) => {
+export const removeReservation = async (email) => {
     try {
         const waitlist = await prisma.reservations.delete({
             where: {
-                phone: phone
+                email: email
             }
         })
         return [null, waitlist];
@@ -111,9 +111,9 @@ export const removeReservation = async (phone) => {
 }
 
 // moves a reservation to confirmed reservation table
-export const confirmReservation = async (phone) => {
+export const confirmReservation = async (email) => {
     try {
-        const [err, confirmedRes] = await removeReservation(phone);
+        const [err, confirmedRes] = await removeReservation(email);
         if (err) console.log(err);
         else {
             const confirmedReservation = await prisma.confirmed_reservations.create({

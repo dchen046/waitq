@@ -35,13 +35,12 @@ const WaitlistTable = () => {
 const AddWaitlistRow = () => {
     const waitlist = useWaitlistContext();
     const waitlistUpdater = useWaitlistUpdateContext();
-    const statuses = useRef([]);
 
     return (
         waitlist.map((entry, index) => {
             // delete button
             const handleDelete = async () => {
-                const url = `http://localhost:3000/api/waitlist/delete/${entry.phone}`;
+                const url = `http://localhost:3000/api/waitlist/delete/${entry.email}`;
                 const auth = `Bearer ${localStorage.getItem('jwt')}`
                 const response = await fetch(url, {
                     method: 'DELETE',
@@ -52,13 +51,12 @@ const AddWaitlistRow = () => {
                 if (!response.ok) console.log(`Response status: ${response.status}`);
                 else {
                     waitlistUpdater.removeFromWaitlist(entry.phone);
-                    statuses.current[index].remove();
                 }
             }
 
             // confirm button
             const handleConfirm = async () => {
-                const url = `http://localhost:3000/api/waitlist/confirm/${entry.phone}`;
+                const url = `http://localhost:3000/api/waitlist/confirm/${entry.email}`;
                 const auth = `Bearer ${localStorage.getItem('jwt')}`
                 const response = await fetch(url, {
                     method: 'PUT',
@@ -69,7 +67,6 @@ const AddWaitlistRow = () => {
                 if (!response.ok) console.log(`Response status: ${response.status}`);
                 else {
                     waitlistUpdater.removeFromWaitlist(entry.phone);
-                    statuses.current[index].remove();
                 }
             }
 
