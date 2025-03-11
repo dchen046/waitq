@@ -63,7 +63,7 @@ export const getBusinesses = async (uid) => {
     }
 }
 
-export const addBusiness = async (name, addr, phone, email, uid) => {
+export const addBusiness = async (name, uid, addr='', phone='', email='') => {
     try {
         const newBusiness = await prisma.businesses.create({
             data: {
@@ -74,12 +74,27 @@ export const addBusiness = async (name, addr, phone, email, uid) => {
                 user_id: uid
             }
         });
-        console.log(newBusiness);
         return [null, newBusiness];
     } catch (err) {
         return [err, null];
     }
 }
+
+// export const createBusiness = async (name, uid) => {
+//     try {
+//         const newBusiness = await prisma.businesses.create({
+//             data: {
+//                 name: name,
+//                 user_id: uid,
+
+//             }
+//         });
+//         console.log(newBusiness);
+//         return [null, newBusiness];
+//     } catch (err) {
+//         return [err, null];
+//     }
+// }
 
 export const getReservations = async (start, end) => {
     try {
