@@ -11,8 +11,8 @@ const create2Darray = (size) => {
         for (let col = 0; col < size; ++col) {
             const i = col + row * size;
             gridRow[col] = {
-                row: row,
-                col: col,
+                // row: row,
+                // col: col,
                 used: false,
                 name: '',
                 number: i
@@ -37,12 +37,13 @@ const Layout = ({ grid }) => {
 
     const handleSave = () => {
         toggleEditMode();
-        console.log(grid);
+        // save grid
+        localStorage.setItem('layout', JSON.stringify(grid));
     }
 
     return (
         <>
-            {editMode ? <Grid grid={grid} /> : <Floorplan grid={grid}/>}
+            {editMode ? <Grid grid={grid} /> : <Floorplan grid={grid} />}
 
             <Button
                 variant="warning"
@@ -68,7 +69,9 @@ const Layout = ({ grid }) => {
 }
 
 const CustomLayout = () => {
-    const grid = useRef(create2Darray(12));
+    const grid = useRef(
+        localStorage.getItem('layout') ? JSON.parse(localStorage.getItem('layout')) : create2Darray(12)
+    );
     return (
         <Container className="grid-container">
             <Layout grid={grid.current} />
