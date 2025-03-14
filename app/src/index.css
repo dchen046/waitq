@@ -91,3 +91,12 @@ button:focus-visible {
 .w-10 {
   width: 10%;
 }
+
+.grid-container {
+  max-height: 100vh;
+  /* background-color: red; */
+}
+.grid-button {
+  height: 4rem;
+  width: 100%;
+}

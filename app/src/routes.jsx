@@ -3,6 +3,7 @@ import LoginPage from './components/Pages/LoginPage.jsx';
 import SignupPage from './components/Pages/SignupPage.jsx';
 import ProfilePage from './components/Pages/ProfilePage.jsx';
 import Waitlist from './components/Waitlist.jsx';
+import CustomLayout from './components/Layout/CustomLayout.jsx';
 
 const routes = [
   {
@@ -18,7 +19,7 @@ const routes = [
     element: <App />,
     children: [
       {path: 'waitlist', element: <Waitlist />},
-      {path: 'layout', element: <p>hi</p>},
+      {path: 'layout', element: <CustomLayout />},
       {path: 'profile', element: <ProfilePage />}
     ]
   },
